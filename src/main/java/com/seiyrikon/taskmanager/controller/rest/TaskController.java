@@ -14,24 +14,19 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1")
+@RequestMapping("api/v1/task")
 public class TaskController {
 
-//    private final TaskApi taskService;
-//
-//    public TaskController(TaskApi taskService) {
-//        this.taskService = taskService;
-//    }
+    private final TaskApi taskService;
 
-    private final TaskService service;
-
-    public TaskController(TaskService service) {
-        this.service = service;
+    public TaskController(TaskApi taskService) {
+        this.taskService = taskService;
     }
 
-    @GetMapping("/tasks")
-    public ResponseEntity<List<TaskResponseDto>> get() {
-//        TaskGetRequest request = new TaskGetRequest();
-        return ResponseEntity.ok(service.getAllTask());
+    @GetMapping("/get")
+    public ResponseEntity<TaskGetResponse> get() {
+        TaskGetRequest request = new TaskGetRequest();
+        request.setId("1");
+        return ResponseEntity.ok(taskService.get(request));
     }
 }

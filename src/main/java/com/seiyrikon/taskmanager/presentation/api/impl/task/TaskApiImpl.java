@@ -9,6 +9,7 @@ import com.seiyrikon.taskmanager.presentation.api.impl.task.mapper.TaskGetServic
 import com.seiyrikon.taskmanager.presentation.api.impl.task.model.TaskGetRequest;
 import com.seiyrikon.taskmanager.presentation.api.impl.task.model.TaskGetResponse;
 import com.seiyrikon.taskmanager.presentation.api.interfaces.task.TaskApi;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,9 +30,9 @@ public class TaskApiImpl implements TaskApi {
     }
 
     @Override
-    public List<Task> get() {
-//        TaskGetServiceInput serviceInput = taskGetServiceInputMapper.map(request);
-//        TaskGetServiceOutput serviceOutput = taskGetService.executeService(serviceInput);
-        return taskGetService.executeService();
+    public TaskGetResponse get(TaskGetRequest request) {
+        TaskGetServiceInput serviceInput = taskGetServiceInputMapper.map(request);
+        TaskGetServiceOutput serviceOutput = taskGetService.executeService(serviceInput);
+        return taskGetServiceResponseMapper.map(serviceOutput);
     }
 }
