@@ -1,28 +1,42 @@
 package com.seiyrikon.taskmanager.domain.entity.dbaccess.tables;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Objects;
 
-@Data
 @Entity
 @Table(name = "user", schema = "task")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString(onlyExplicitlyIncluded = true)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ToString.Include
     private Long id;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Task> tasks;
+
+    @ToString.Include
     @Column(name = "added_by")
     private String addedBy;
 
+    @ToString.Include
     @Column(name = "updated_by")
     private String updatedBy;
 
+    @ToString.Include
     @Column(name = "added_at")
     private Timestamp addedAt;
 
+    @ToString.Include
     @Column(name = "updated_at")
     private Timestamp updatedAt;
 
@@ -30,22 +44,11 @@ public class User {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(addedBy, user.addedBy) && Objects.equals(updatedBy, user.updatedBy) && Objects.equals(addedAt, user.addedAt) && Objects.equals(updatedAt, user.updatedAt);
+        return Objects.equals(id, user.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, addedBy, updatedBy, addedAt, updatedAt);
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", addedBy='" + addedBy + '\'' +
-                ", updatedBy='" + updatedBy + '\'' +
-                ", addedAt=" + addedAt +
-                ", updatedAt=" + updatedAt +
-                '}';
+        return Objects.hashCode(id);
     }
 }

@@ -1,8 +1,7 @@
 package com.seiyrikon.taskmanager.domain.entity.dbaccess.tables;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -10,30 +9,46 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
 
-@Data
 @Entity
 //@Cacheable
 //@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-@Table(name = "task", schema = "task")
+@Table(name = "task",
+        schema = "task",
+        indexes = @Index(name = "idx_task_user_id", columnList = "user_id"))
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString(onlyExplicitlyIncluded = true)
 public class Task {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ToString.Include
     private Long id;
 
     private String name;
 
     private String description;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @ToString.Include
     @Column(name = "added_by")
     private String addedBy;
 
+    @ToString.Include
     @Column(name = "updated_by")
     private String updatedBy;
 
+    @ToString.Include
     @Column(name = "added_at")
     private Timestamp addedAt;
 
+    @ToString.Include
     @Column(name = "updated_at")
     private Timestamp updatedAt;
 
@@ -43,25 +58,11 @@ public class Task {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return Objects.equals(id, task.id) && Objects.equals(name, task.name) && Objects.equals(description, task.description) && Objects.equals(addedBy, task.addedBy) && Objects.equals(updatedBy, task.updatedBy) && Objects.equals(addedAt, task.addedAt) && Objects.equals(updatedAt, task.updatedAt) && Objects.equals(status, task.status);
+        return Objects.equals(id, task.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, addedBy, updatedBy, addedAt, updatedAt, status);
-    }
-
-    @Override
-    public String toString() {
-        return "Task{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", addedBy='" + addedBy + '\'' +
-                ", updatedBy='" + updatedBy + '\'' +
-                ", addedAt=" + addedAt +
-                ", updatedAt=" + updatedAt +
-                ", status='" + status + '\'' +
-                '}';
+        return Objects.hashCode(id);
     }
 }
