@@ -6,7 +6,6 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
-@JsonTypeName("taskRequest")
 public class TaskGetRequest {
     private @Valid String id;
 

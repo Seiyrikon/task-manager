@@ -9,7 +9,6 @@ import org.mapstruct.Mapping;
 
 import java.util.List;
 
-
 @Mapper(config = DefaultMapperConfig.class)
 public interface TaskGetServiceOutputMapper {
     @Mapping(target = "tasks", source = "serviceOutput.tasks")

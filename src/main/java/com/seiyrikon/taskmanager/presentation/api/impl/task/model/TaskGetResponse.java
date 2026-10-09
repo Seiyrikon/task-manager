@@ -8,11 +8,13 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
-@JsonTypeName("taskResponse")
-@Data
+@Getter
+@Setter
 public class TaskGetResponse {
     @JsonProperty("tasks")
     private @Valid List<TaskGetServiceResult> tasks;

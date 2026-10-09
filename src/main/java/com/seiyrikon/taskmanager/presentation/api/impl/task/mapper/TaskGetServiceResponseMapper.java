@@ -6,9 +6,6 @@ import com.seiyrikon.taskmanager.presentation.api.impl.task.model.TaskGetRespons
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import java.util.List;
-
-
 @Mapper(config = DefaultMapperConfig.class)
 public interface TaskGetServiceResponseMapper {
     @Mapping(target = "tasks", source = "serviceOutput.tasks")

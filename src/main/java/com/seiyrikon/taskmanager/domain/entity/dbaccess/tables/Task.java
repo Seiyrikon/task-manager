@@ -6,6 +6,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -46,11 +47,11 @@ public class Task {
 
     @ToString.Include
     @Column(name = "added_at")
-    private Timestamp addedAt;
+    private LocalDateTime addedAt;
 
     @ToString.Include
     @Column(name = "updated_at")
-    private Timestamp updatedAt;
+    private LocalDateTime updatedAt;
 
     private String status;
 

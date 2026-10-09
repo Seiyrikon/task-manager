@@ -1,13 +1,13 @@
 package com.seiyrikon.taskmanager.domain.service.task.dto;
 
 import com.seiyrikon.taskmanager.domain.entity.dbaccess.tables.Task;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class TaskGetServiceResult {
     private String name;
     private String description;

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -34,11 +35,11 @@ public class User {
 
     @ToString.Include
     @Column(name = "added_at")
-    private Timestamp addedAt;
+    private LocalDateTime addedAt;
 
     @ToString.Include
     @Column(name = "updated_at")
-    private Timestamp updatedAt;
+    private LocalDateTime updatedAt;
 
     @Override
     public boolean equals(Object o) {
