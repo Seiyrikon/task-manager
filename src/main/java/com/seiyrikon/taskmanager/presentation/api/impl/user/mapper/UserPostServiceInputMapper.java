@@ -13,16 +13,6 @@ import java.time.LocalDateTime;
 @Mapper(config = DefaultMapperConfig.class)
 public interface UserPostServiceInputMapper {
 
-    @Mapping(target = "user", source = "request.id", qualifiedByName = "toUser")
+    @Mapping(target = "id", source = "request.id")
     UserPostServiceInput map(UserPostRequest request);
-
-    @Named("toUser")
-    default User toUser(Long userId) {
-        return User.builder()
-                .addedBy(AppConstants.ADMIN)
-                .addedAt(LocalDateTime.now())
-                .updatedBy(AppConstants.ADMIN)
-                .updatedAt(LocalDateTime.now())
-                .build();
-    }
 }

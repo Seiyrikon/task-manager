@@ -2,11 +2,13 @@ package com.seiyrikon.taskmanager.controller.rest;
 
 import com.seiyrikon.taskmanager.presentation.api.impl.task.model.TaskGetRequest;
 import com.seiyrikon.taskmanager.presentation.api.impl.task.model.TaskGetResponse;
+import com.seiyrikon.taskmanager.presentation.api.impl.task.model.TaskPostRequest;
+import com.seiyrikon.taskmanager.presentation.api.impl.task.model.TaskPostResponse;
 import com.seiyrikon.taskmanager.presentation.api.interfaces.task.TaskApi;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/v1")
@@ -23,5 +25,10 @@ public class TaskController {
         TaskGetRequest request = new TaskGetRequest();
         request.setId("1");
         return ResponseEntity.ok(taskApi.get(request));
+    }
+
+    @PostMapping("/task")
+    public ResponseEntity<TaskPostResponse> post(@RequestBody @Valid @NotNull TaskPostRequest request) {
+        return ResponseEntity.ok(taskApi.post(request));
     }
 }

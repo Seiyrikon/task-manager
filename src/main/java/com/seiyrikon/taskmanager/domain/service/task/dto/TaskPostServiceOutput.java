@@ -1,4 +1,4 @@
-package com.seiyrikon.taskmanager.domain.service.user.dto;
+package com.seiyrikon.taskmanager.domain.service.task.dto;
 
 import lombok.*;
 
@@ -7,6 +7,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserPostServiceOutput {
+public class TaskPostServiceOutput {
     private Boolean created;
 }

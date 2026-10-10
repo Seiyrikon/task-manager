@@ -9,5 +9,5 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 public class UserPostServiceInput {
-    private User user;
+    private Long id;
 }

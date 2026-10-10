@@ -11,7 +11,7 @@ import org.mapstruct.Named;
 @Mapper(config = DefaultMapperConfig.class)
 public interface UserPostServiceOutputMapper {
 
-    @Mapping(target = "isCreated", source = "result", qualifiedByName = "toIsCreated")
+    @Mapping(target = "created", source = "result.user", qualifiedByName = "toIsCreated")
     UserPostServiceOutput map(UserPostServiceResult result);
 
     @Named("toIsCreated")

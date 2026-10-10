@@ -9,6 +9,6 @@ import org.mapstruct.Mapping;
 @Mapper(config = DefaultMapperConfig.class)
 public interface UserPostServiceResponseMapper {
 
-    @Mapping(target = "isCreated", source = "serviceOutput.isCreated")
+    @Mapping(target = "created", source = "serviceOutput.created")
     UserPostResponse map(UserPostServiceOutput serviceOutput);
 }

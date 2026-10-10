@@ -1,12 +1,9 @@
-package com.seiyrikon.taskmanager.presentation.api.impl.user.model;
+package com.seiyrikon.taskmanager.presentation.api.impl.task.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
-public class UserPostResponse {
+public class TaskPostResponse {
     @JsonProperty("is_created")
     private Boolean created;
 
