@@ -1,27 +1,20 @@
 package com.seiyrikon.taskmanager.presentation.api.impl.task;
 
 import com.seiyrikon.taskmanager.domain.entity.dbaccess.tables.Task;
-import com.seiyrikon.taskmanager.domain.service.task.TaskGetService;
-import com.seiyrikon.taskmanager.domain.service.task.TaskPostService;
-import com.seiyrikon.taskmanager.domain.service.task.dto.TaskGetServiceInput;
-import com.seiyrikon.taskmanager.domain.service.task.dto.TaskGetServiceOutput;
-import com.seiyrikon.taskmanager.domain.service.task.dto.TaskPostServiceInput;
-import com.seiyrikon.taskmanager.domain.service.task.dto.TaskPostServiceOutput;
-import com.seiyrikon.taskmanager.presentation.api.impl.task.mapper.TaskGetServiceInputMapper;
-import com.seiyrikon.taskmanager.presentation.api.impl.task.mapper.TaskGetServiceResponseMapper;
-import com.seiyrikon.taskmanager.presentation.api.impl.task.mapper.TaskPostServiceInputMapper;
-import com.seiyrikon.taskmanager.presentation.api.impl.task.mapper.TaskPostServiceResponseMapper;
-import com.seiyrikon.taskmanager.presentation.api.impl.task.model.TaskGetRequest;
-import com.seiyrikon.taskmanager.presentation.api.impl.task.model.TaskGetResponse;
-import com.seiyrikon.taskmanager.presentation.api.impl.task.model.TaskPostRequest;
-import com.seiyrikon.taskmanager.presentation.api.impl.task.model.TaskPostResponse;
+import com.seiyrikon.taskmanager.domain.service.task.*;
+import com.seiyrikon.taskmanager.domain.service.task.dto.*;
+import com.seiyrikon.taskmanager.presentation.api.impl.task.mapper.*;
+import com.seiyrikon.taskmanager.presentation.api.impl.task.model.*;
 import com.seiyrikon.taskmanager.presentation.api.interfaces.task.TaskApi;
+import com.seiyrikon.taskmanager.shared.Principal;
+import lombok.AllArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class TaskApiImpl implements TaskApi {
 
     private final TaskGetServiceInputMapper taskGetServiceInputMapper;
@@ -30,20 +23,15 @@ public class TaskApiImpl implements TaskApi {
     private final TaskPostServiceInputMapper taskPostServiceInputMapper;
     private final TaskPostServiceResponseMapper taskPostServiceResponseMapper;
     private final TaskPostService taskPostService;
-
-    public TaskApiImpl(TaskGetServiceInputMapper taskGetServiceInputMapper,
-                       TaskGetServiceResponseMapper taskGetServiceResponseMapper,
-                       TaskGetService taskGetService,
-                       TaskPostServiceInputMapper taskPostServiceInputMapper,
-                       TaskPostServiceResponseMapper taskPostServiceResponseMapper,
-                       TaskPostService taskPostService) {
-        this.taskGetServiceInputMapper = taskGetServiceInputMapper;
-        this.taskGetServiceResponseMapper = taskGetServiceResponseMapper;
-        this.taskGetService = taskGetService;
-        this.taskPostServiceInputMapper = taskPostServiceInputMapper;
-        this.taskPostServiceResponseMapper = taskPostServiceResponseMapper;
-        this.taskPostService = taskPostService;
-    }
+    private final TaskPutServiceInputMapper taskPutServiceInputMapper;
+    private final TaskPutServiceResponseMapper taskPutServiceResponseMapper;
+    private final TaskPutService taskPutService;
+    private final TaskDoneStatusServiceInputMapper taskDoneStatusServiceInputMapper;
+    private final TaskDoneStatusServiceResponseMapper taskDoneStatusServiceResponseMapper;
+    private final TaskDoneStatusService taskDoneStatusService;
+    private final TaskDeleteServiceInputMapper taskDeleteServiceInputMapper;
+    private final TaskDeleteServiceResponseMapper taskDeleteServiceResponseMapper;
+    private final TaskDeleteService taskDeleteService;
 
     @Override
     public TaskGetResponse get(TaskGetRequest request) {
@@ -57,6 +45,27 @@ public class TaskApiImpl implements TaskApi {
         TaskPostServiceInput serviceInput = taskPostServiceInputMapper.map(request);
         TaskPostServiceOutput serviceOutput = taskPostService.executeService(serviceInput);
         return taskPostServiceResponseMapper.map(serviceOutput);
+    }
+
+    @Override
+    public TaskPutResponse put(TaskPutRequest request) {
+        TaskPutServiceInput serviceInput = taskPutServiceInputMapper.map(request);
+        TaskPutServiceOutput serviceOutput = taskPutService.executeService(serviceInput);
+        return taskPutServiceResponseMapper.map(serviceOutput);
+    }
+
+    @Override
+    public TaskDoneStatusResponse doneStatus(TaskDoneStatusRequest request) {
+        TaskDoneStatusServiceInput serviceInput = taskDoneStatusServiceInputMapper.map(request, Principal.getId());
+        TaskDoneStatusServiceOutput serviceOutput = taskDoneStatusService.executeService(serviceInput);
+        return taskDoneStatusServiceResponseMapper.map(serviceOutput);
+    }
+
+    @Override
+    public TaskDeleteResponse delete(TaskDeleteRequest request) {
+        TaskDeleteServiceInput serviceInput = taskDeleteServiceInputMapper.map(request, Principal.getId());
+        TaskDeleteServiceOutput serviceOutput = taskDeleteService.executeService(serviceInput);
+        return taskDeleteServiceResponseMapper.map(serviceOutput);
     }
 
 }

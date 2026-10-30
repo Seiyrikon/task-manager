@@ -9,12 +9,14 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 public class TaskGetServiceResult {
+    private Long id;
     private String name;
     private String description;
     private String status;
     private Long user_id;
 
     public TaskGetServiceResult(Task task) {
+        this.id = task.getId();
         this.name = task.getName();
         this.description = task.getDescription();
         this.status = task.getStatus();
